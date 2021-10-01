@@ -2191,4 +2191,102 @@ where deptno = 30;
 
 commit;
 
+select * from dept_temp;
+
+-- DDL(데이터 정의어)
+-- 객체를 생성, 변경, 삭제
+-- 실행하면 반영됨
+
+-- create(생성), alter(변경), drop(삭제)
+
+-- create table 테이블이름(
+--          필드명1 자료형,
+--          필드명2 자료형,
+-- )
+
+-- 테이블 이름 규칙
+-- 문자로 시작(영어)
+-- 같은 사용자 안에서 동일한 테이블 명 사용불가
+-- sql 키워드는 테이블 이름으로 사용할 수 없음
+
+-- 필드명 생성 규칙
+-- 문자로 시작
+-- 열 이름은 중복되면 안됨
+-- sql 키워드 사용 불가
+
+-- 자료형 : 숫자 number, 가변문자 varchar2, 날짜 date  
+--                     고정문자 char2
+
+create table EMP_DDL(
+ EMPNO NUMBER(4),  -- 숫자로 4자리까지 허용
+ ENAME VARCHAR2(10), 
+ JOB VARCHAR2(9),
+ MGR NUMBER(4),
+ HIREDATE DATE,
+ SAL NUMBER(7,2),  -- 숫자로 7자리까지, 소수점은 2자리까지 허용
+ COMM NUMBER(7,2),
+ DEPTNO NUMBER(2)
+ );
+ 
+ DESC EMP_DDL;
+
+drop table emp_ddl;
+
+-- 구조+데이터 이용하여 생성
+create table dept_ddl as select * from dept;
+create table dept_ddl_30 as select * from dept where deptno=30;
+
+--다른 테이블의 구조만 복사하여 새 테이블 생성
+create table dept_ddl2 as select * from dept where 1<>1;
+select * from dept_ddl2;
+
+-- ALTER
+-- 이미 생성된 객체를 변경
+
+create table emp_alter as select * from emp;
+-- 새로운 컬럼(열) 추가 : ADD
+desc emp_alter;
+
+alter table emp_alter add HP varchar2(20);
+select * from emp_alter;
+
+-- RENAME : 열 이름을 변경
+alter table emp_alter rename column HP to TEL;
+
+-- MODIFY : 열의 자료형을 변경
+alter table emp_alter modify empno number(5);
+
+-- DROP : 열 삭제
+alter table emp_alter drop column TEL;
+
+
+
+-- 테이블 이름 변겅
+rename emp_alter to emp_rename;
+select * from emp_rename;
+
+-- 테이블 데이터를 삭제 truncate
+truncate table emp_rename;
+
+-- 실습1] 멤버 테이블 
+create table member (
+id char(8),
+name varchar2(10),
+addr varchar2(50),
+nation char(4),
+email varchar2(50),
+age number(7,2)
+);
+
+select * from member;
+
+-- 실습2] member 테이블에 BIGO 열 추가 가변형문자열,20
+alter table member add BIGO varchar(20);
+
+desc member;
+-- 실습3]
+alter table member modify bigo varchar2(30);
+-- 실습4]
+alter table member rename column bigo to remark;
+
 
